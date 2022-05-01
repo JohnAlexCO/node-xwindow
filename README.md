@@ -44,6 +44,6 @@ xwin.reset();`
 **reset** &ndash; resets the terminal color and display settings
 
 ### Example Uses
-- [A replacement for Inquirer, Prompts, et cetera](./prompts.js)
+- A replacement for Inquirer, Prompts, et cetera
 - Simple Terminal-based Games like Rogue
 - Text editors like Vim
