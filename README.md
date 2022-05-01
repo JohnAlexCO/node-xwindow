@@ -28,14 +28,16 @@ prints to the terminal after clicking, scrolling, and pressing A:
 
 **clear** &ndash; clears the terminal and resets the cursor
 
-**cursor** &ndash; sets the terminal's cursor to the given position
-- cursor expects two integer arguments: the `x` and `y` coordinates 
+**getCursor** &nash; returns an object containing the x and y coordinates of the terminal's print cursor
+
+**setCursor** &ndash; sets the terminal's cursor to the given position
+- setCursor expects two integer arguments: the `x` and `y` coordinates 
 
 **color** &ndash; takes in a color name and returns the printable escape sequence
 - color takes one or two arguments; the string to be printed, and an optional `bool` that tells color to change the background color instead
 - this is used directly within the print call, for example: 
 ```javascript
-console.log( xwin.color('red'), "Hello, World!"); 
+console.log( xwin.color('red')+ "Hello, World!"); 
 xwin.reset();`
 ```
 
