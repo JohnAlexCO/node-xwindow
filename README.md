@@ -46,4 +46,4 @@ xwin.reset();`
 ### Example Uses
 - A replacement for Inquirer, Prompts, et cetera
 - Simple Terminal-based Games like Rogue
-- Text editors like Vim
+- Terminal-based Text Editors ![](https://github.com/JohnAlexCO/node-xwindow/blob/main/screenshots/texteditor_test.png)
