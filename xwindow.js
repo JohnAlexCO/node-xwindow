@@ -116,7 +116,7 @@ function setCursor(x,y) {
 }	
 
 function clear() {
-	cursor(0,0)
+	setCursor(0,0)
 	escape('J')
 }
 
