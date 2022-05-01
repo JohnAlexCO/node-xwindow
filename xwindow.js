@@ -43,7 +43,8 @@ function mouse_event(LATCHING_EVENT) {
 	}
 };
 
-function getCursor() { 
+function getCursor() {
+	Cursor.reset = true;
 	escape('6n');
 	return Cursor;
 } const Cursor = {'x':0, 'y':0 }
@@ -71,13 +72,14 @@ function getEvents( LATCHING_EVENT ) {
 		}
 		
 		// getCursor
-		if ((key.sequence).startsWith('\x1B[')) {
+		if ((key.sequence).startsWith('\x1B[') && Cursor.reset == true) {
 			var y = key.sequence.split(';')[0];
 			var x = key.sequence.split(';')[1];
 			y = parseInt( y.split('[')[1] ) // remove the junk before '['
 			x = parseInt( x.slice(0, x.length-1) ) // remove the 'R'
 			Cursor.y = y;
 			Cursor.x = x;
+			delete Cursor.reset;
 			console.log(Cursor);
 			return;
 		}
