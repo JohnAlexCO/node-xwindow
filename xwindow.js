@@ -1,6 +1,7 @@
 module.exports = {
 	getEvents,
-	cursor,
+	getCursor,
+	setCursor,
 	clear,
 	color,
 	reset
@@ -11,7 +12,7 @@ const readline = require('readline');
 	process.stdin.setRawMode(true);
 
 const grabMouse = () => { escape('?1000h'); }
-const releaseMouse = () => { escape('1000l'); }
+const releaseMouse = () => { escape('?1000l'); }
 
 var moused = false;
 var mouse_codes = [];
@@ -42,6 +43,11 @@ function mouse_event(LATCHING_EVENT) {
 	}
 };
 
+function getCursor() { 
+	escape('6n');
+	return Cursor;
+} const Cursor = {'x':0, 'y':0 }
+
 function key_event(LATCHING_EVENT, key) {
 	LATCHING_EVENT({
 		'event':'keypress',
@@ -61,6 +67,18 @@ function getEvents( LATCHING_EVENT ) {
 			moused = true
 			if ( mouse_codes.length < 7 ) { mouse_codes.push( key.sequence )	}
 			else { mouse_event(LATCHING_EVENT); }
+			return;
+		}
+		
+		// getCursor
+		if ((key.sequence).startsWith('\x1B[')) {
+			var y = key.sequence.split(';')[0];
+			var x = key.sequence.split(';')[1];
+			y = parseInt( y.split('[')[1] ) // remove the junk before '['
+			x = parseInt( x.slice(0, x.length-1) ) // remove the 'R'
+			Cursor.y = y;
+			Cursor.x = x;
+			console.log(Cursor);
 			return;
 		}
 
@@ -89,8 +107,10 @@ function escape() {
 	process.stdout.write(result)
 }
 
-function cursor(x,y) { 
-	escape(y, x+'H') 
+function setCursor(x,y) { 
+	escape(y, x+'H')
+	Cursor.x = x;
+	Cursor.y = y;
 }	
 
 function clear() {
@@ -100,7 +120,6 @@ function clear() {
 
 function reset(){ escape('0m') }
 
-// asci colors
 function color(name, background=false){
 	const code = {
 		'black': 30,
