@@ -60,40 +60,37 @@ function key_event(LATCHING_EVENT, key) {
 	return;
 }
 
+var kill_codes = ['q', 'x', 'd'];
 function getEvents( LATCHING_EVENT ) {
 	grabMouse();
 	process.stdin.on('keypress', (charater, key) => {
-		// mouse events
 		if (key.code == '[M' || moused == true) { 
 			moused = true
 			if ( mouse_codes.length < 7 ) { mouse_codes.push( key.sequence )	}
 			else { mouse_event(LATCHING_EVENT); }
 			return;
 		}
-		
-		// getCursor
 		if ((key.sequence).startsWith('\x1B[') && Cursor.reset == true) {
+			// first, just get the raw values
 			var y = key.sequence.split(';')[0];
 			var x = key.sequence.split(';')[1];
+			// then clean them up
 			y = parseInt( y.split('[')[1] ) // remove the junk before '['
 			x = parseInt( x.slice(0, x.length-1) ) // remove the 'R'
 			Cursor.y = y;
 			Cursor.x = x;
 			delete Cursor.reset;
-			console.log(Cursor);
 			return;
 		}
-
-		// ctrl codes
 		if (key.ctrl == true) {
-			if (key.name == 'c' |
-			   key.name == 'd') {
-				releaseMouse();
-				process.exit(0);
+			for(let n in kill_codes){
+			   	if(key.name == kill_codes[n]){
+					releaseMouse();
+					clear();
+					process.exit(0);
+				}
 			}
 		}
-
-		// other keys
 		key_event(LATCHING_EVENT, key);
 	})
 }
