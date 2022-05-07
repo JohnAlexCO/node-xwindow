@@ -95,6 +95,7 @@ function cursorUpdate(){
 	
 	if(status.lines.length < VSIZE) {
 		status.top = 0;	
+		if(status.cy > status.lines.length) {status.cy = status.lines.length-1};
 	}
 	
 	try{ if(status.cx > status.lines[status.cy+status.top].length) {
