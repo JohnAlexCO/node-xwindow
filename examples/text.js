@@ -59,12 +59,14 @@ const COL = 6
 const SCROLLSPEED = 4
 function fill() {
 	for(let i=0; i<VSIZE; i++) {
-		xwin.setCursor(1,i+2);
-		console.log(i+status.top)
-		
-		xwin.setCursor(1+COL,i+2);
-		if(!(status.lines[i+status.top] === undefined))
-		{ console.log( status.lines[i+status.top] ) }
+		if(i<status.lines.length){
+			xwin.setCursor(1,i+2);
+			console.log(i+status.top)
+
+			xwin.setCursor(1+COL,i+2);
+			if(!(status.lines[i+status.top] === undefined))
+			{ console.log( status.lines[i+status.top] ) }
+		}
 	}
 }
 
@@ -79,16 +81,20 @@ function Update() {
 
 function cursorUpdate(){
 	if(status.cy < 0) {
-		if(status.top > 0){status.top--;}
-		status.cy = 0;
+		while(status.top > 0){status.top--;}
+		status.cy++;
 	}
-	
+	if(status.top < 0) { status.top = 0 }
 	if(status.top+status.cy > status.lines.length) { status.top = status.lines.length-VSIZE }
 	if(status.cx < 1) { status.cx = 0 }
 	
 	if(status.cy == VSIZE) {
 		status.top++; 
 		status.cy = VSIZE-1;	
+	}
+	
+	if(status.lines.length < VSIZE) {
+		status.top = 0;	
 	}
 	
 	try{ if(status.cx > status.lines[status.cy+status.top].length) {
