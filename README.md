@@ -28,7 +28,7 @@ prints to the terminal after clicking, scrolling, and pressing A:
 
 **clear** &ndash; clears the terminal and resets the cursor
 
-**getCursor** &nash; returns an object containing the x and y coordinates of the terminal's print cursor
+**getCursor** &ndash; returns an object containing the x and y coordinates of the terminal's print cursor
 
 **setCursor** &ndash; sets the terminal's cursor to the given position
 - setCursor expects two integer arguments: the `x` and `y` coordinates 
